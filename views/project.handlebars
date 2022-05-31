@@ -1,0 +1,25 @@
+<div class="text-center">
+  <h2>{{name}}</h2>
+  <p>{{description}}</p>
+  <p>Created by {{user.name}} on {{format_date date_created}}</p>
+  <p></p>
+   
+  </p>
+
+
+{{!-- How do we only show form when logged in --}}
+<form class="form new-comment-form">
+      <div class="form-group">
+        <label for="commentText">Add Comment:</label>
+        <input class="form-input" type="text" id="comment" name="comment" />
+      </div>
+        <button type="submit" value="submit" class="btn btn-primary">Post Comment</button>
+      </div>
+    </form>
+  </div>
+
+  
+{{> comments }}
+
+
+<script src="./js/comment.js"></script>
