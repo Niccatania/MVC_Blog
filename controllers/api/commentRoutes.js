@@ -1,51 +1,43 @@
 const router = require('express').Router();
-const { Comment} = require('../../models');
-const withAuth = require('../../utils/auth.js');
+const { Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-// This GET method will find any comments that have been posted to the server
+router.post('/', withAuth, async (req, res) => {
+    try {
+      const newComment = await Comment.create({
+        // '...' is a spread operator, allows an array or string to be expanded as well as an objext expression
+        ...req.body,
+        user_id: req.session.user_id,
+      });
+  
+      res.status(200).json(newComment);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+  
+
 router.get('/', async (req, res) => {
-  const commentData = await Comment.findAll().catch((err) => { 
-      res.json(err);
-    });
+    try {
+      const commentData = await Comment.findAll({
+        include: [
+          {
+            model: User,
+            attributes: ['name'],
+          },
+        ],
+      });
+  
       const comments = commentData.map((comment) => comment.get({ plain: true }));
-      res.render('project', { comments});
-    });
-
-
-
-router.post('/', async (req, res) => {
-
-  try {
-  const commentData= await Comment.create({
-      comment_text: req.body.comment_text,
-      user_id: req.session.user_id,
-      post_id: req.body.post_id
-    });
-    res.status(200).json(commentData)
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
-// // Delete comment
-// router.delete('/:id', withAuth, (req, res) => {
-//   Comment.destroy({
-//     where: {
-//       id: req.params.id
-//     }
-//   })
-//     .then(returnedData => {
-//       if (!returnedData) {
-//         res.status(404).json({ message: 'Nothing found' });
-//         return;
-//       }
-//       res.json(returnedData);
-//     })
-//     .catch(err => {
-//       res.status(500).json(err);
-//     });
-// });
-
-
-
+  
+  
+      res.render('project', { 
+        comments, 
+        logged_in: req.session.logged_in 
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+  
 module.exports = router;
