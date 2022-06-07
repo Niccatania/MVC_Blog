@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 require('dotenv').config();
 
 let sequelize;
-// Do I need to install this?
+// Jaws DB is what lets us run our database on Heroku
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {

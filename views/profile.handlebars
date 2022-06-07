@@ -8,14 +8,14 @@
   <div class="col-md-6">
     <h3>Create a New Blog Post:</h3>
 
-    <form class="form new-project-form">
+    <form class="form new-post-form">
       <div class="form-group">
-        <label for="project-name">Post Title:</label>
-        <input class="form-input" type="text" id="project-name" name="project-name" />
+        <label for="post-name">Post Title:</label>
+        <input class="form-input" type="text" id="post-name" name="post-name" />
       </div>
       <div class="form-group">
-        <label for="project-desc">Post Contents:</label>
-        <textarea class="form-input" id="project-desc" name="project-desc"></textarea>
+        <label for="post-desc">Post Contents:</label>
+        <textarea class="form-input" id="post-desc" name="post-desc"></textarea>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Create Post</button>
@@ -23,20 +23,20 @@
     </form>
   </div>
 
-{{!-- If there are any projects then handlebars will render this --}}
-  {{#if projects.length}}
-  <div class="col-md-6 project-list">
-    <h3>Current Projects:</h3>
+{{!-- If there are any posts then handlebars will render this --}}
+  {{#if posts.length}}
+  <div class="col-md-6 post-list">
+    <h3>Current posts:</h3>
 
 {{!-- Each will iterate over a list --}}
-    {{#each projects as |project|}}
+    {{#each posts as |post|}}
     <div class="row mb-2">
       <div class="col-md-8">
-        {{!-- Adds a link to the project/s as the project name --}}
-        <h4><a href="/project/{{project.id}}">{{project.name}}</a></h4>
+        {{!-- Adds a link to the post/s as the post name --}}
+        <h4><a href="/post/{{post.id}}">{{post.name}}</a></h4>
       </div>
       <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{project.id}}">DELETE</button>
+        <button class="btn btn-sm btn-danger" data-id="{{post.id}}">DELETE</button>
       </div>
       
     </div>
